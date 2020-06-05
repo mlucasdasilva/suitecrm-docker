@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+
+ suitecrm:
+  image: suitecrm
+  ports:
+     - "1080:80"
+     - "1443:443"
+  volumes:
+     - data-suitecrm:/srv
+     - app-suitecrm-html:/var/www/html
+     - logs-suitecrm-apache:/var/log/httpd
+     - data-suitecrm-upload:/data-suitecrm/upload
+     - configs-suitecrm:/suitecrm-configs
+
+ mysql:
+    image: mysql:5.7.13
+    environment:
+      MYSQL_ROOT_PASSWORD: suiteCRM-1234
+      MYSQL_DATABASE: suitecrm
+      MYSQL_USER: suitecrm
+      MYSQL_PASSWORD: suitecrm
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    logging:
+      options:
+        max-size: 50m
+    volumes:
+      - data-mysql:/var/lib/mysql
+
+
+volumes:
+  data-suitecrm:
+  app-suitecrm-html:
+  logs-suitecrm-apache:
+  data-suitecrm-upload:
+  configs-suitecrm:
+  data-mysql:
+

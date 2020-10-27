@@ -4,6 +4,8 @@ services:
 
  suitecrm:
   image: suitecrm
+  build:
+    context: ./
   ports:
      - "1080:80"
      - "1443:443"
